@@ -1,0 +1,70 @@
+
+<!-- this is index.handlebars -->
+
+<div class="row" id="lists">
+  <div class="col-sm-6">
+    <h2>The Nice</h2>
+    <div class="listBox">
+      {{#each children}}
+        {{#unless this.naughty}}
+          <div class="row childRow">
+            <div class="col-sm-8">
+              <img src="/static/img/candy-cane.png" class="candyCane"><h3>{{this.child_name}}</h3>
+            </div>
+            <div class="col-sm-4 text-right">
+              <form action="/children/naughty/{{this.id}}" method="POST">
+                <button type="submit"  class="btn btn-secondary"  title="Move to Naughty List">Naughtify</button>
+              </form>
+            </div>
+          </div>
+        {{/unless}}
+      {{/each}}
+    </div>
+  </div>
+
+  <div class="col-sm-6">
+    <h2 class="naughty">The Naughty</h2>
+    <div class="listBox">
+      {{#each children}}
+        {{#if this.naughty}}
+          <div class="row childRow">
+            <div class="col-sm-8">
+              <img src="/static/img/coal.png" class="candyCane"><h3 class="naughty">{{this.child_name}}</h3>
+            </div>
+
+            <div class="col-sm-4 text-right">
+      <!-- Add them back to the Nice List -->
+
+              <form action="/children/nice/{{this.id}}" method="POST">
+                <button type="submit"  class="btn-icon"   title="Move to Nice List"><i class="fa fa-smile-o" aria-hidden="true"></i></button>
+              </form>
+          
+      <!-- Delete name -->
+              <form action="/children/delete/{{this.id}}?_method=DELETE" method="POST">
+                <button type="submit"   title="Delete Child" class="btn-icon"><i class="fa fa-window-close-o aria-hidden="true"></i></button>
+              </form>
+            </div>
+          </div>
+        {{/if}}
+      {{/each}}
+    </div>
+  </div>
+</div>
+
+
+<div class="row">
+  <div class="col-sm-12 text-center">
+      
+      <div class="inlineForm">
+        <h2 class="formTitle">Add a Child to List</h2>
+        <form method="POST" action="/children/create">
+          <div class="form-group">
+            <label for="name">Child's Name:</label>
+            <input type="text" id="name" name="name">
+
+          <button type="submit" class="btn btn-primary">Add Child</button>
+          </div>
+        </form>
+      </div>
+  </div>
+</div>

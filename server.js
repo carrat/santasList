@@ -10,6 +10,10 @@ var application_controller = require('./controllers/application_controller.js');
 var children_controller = require('./controllers/children_controller.js');
 var gifts_controller = require('./controllers/gifts_controller.js')
 
+
+// we bring in the models we exported with index.js
+var models = require("./models");
+
 var app = express();
 
 // target static files
@@ -34,23 +38,19 @@ app.use('/', application_controller);
 app.use('/children', children_controller);
 app.use('/gifts', gifts_controller);
 
-// catch 404 and forward to error handler
-app.use(function(req, res, next) {
-  var err = new Error('Not Found');
-  err.status = 404;
-  next(err);
+
+
+// we set the port of the app
+app.set('port', process.env.PORT || 3000);
+
+
+// we sync the models with our db 
+// (thus creating the apropos tables)
+models.sequelize.sync().then(function () {
+	// set our app to listen to the port we set above
+  var server = app.listen(app.get('port'), function() {
+  	// then save a log of the listening to our debugger.
+    console.log('Express server listening on port ' + server.address().port);
+  });
 });
 
-// error handler
-// no stacktraces leaked to user unless in development environment
-app.use(function(err, req, res, next) {
-  res.status(err.status || 500);
-  res.render('error', {
-    message: err.message,
-    error: (app.get('env') === 'development') ? err : {}
-  })
-});
-
-
-// our module get's exported as app.
-module.exports = app;

@@ -9,7 +9,7 @@
 var debug = require('debug')('express-example');
 
 // we bring in the app we exported from server.js
-var app = require('../server.js');
+var app = require('../server');
 
 // we bring in the models we exported with index.js
 var models = require("../models");

@@ -1,10 +1,11 @@
 'use strict';
 module.exports = function(sequelize, DataTypes) {
   var Gift = sequelize.define('Gift', {
-    giftName: DataTypes.STRING
+    gift_name: DataTypes.STRING,
+    gift_icon: DataTypes.STRING
   }, {
     // don't add the timestamp attributes (updatedAt, createdAt)
-      //timestamps: false,
+      timestamps: false,
 
     // don't delete database entries but set the newly added attribute deletedAt
     // to the current date (when deletion was done). paranoid will only work if
@@ -24,6 +25,7 @@ module.exports = function(sequelize, DataTypes) {
     tableName: 'gifts',
     classMethods: {
       associate: function(models) {
+        Gift.hasOne(models.Child);
         Gift.belongsToMany(models.Child, {through: 'ChildGift'})
       }
     }

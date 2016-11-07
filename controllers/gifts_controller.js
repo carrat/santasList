@@ -9,23 +9,24 @@ var models  = require('../models');
 var newGift;
 
 // define routes
-router.get('/gifts', function (req, res) {
+router.get('/', function (req, res) {
 
 	models.Gift.findAll({})
-	.then(function(result){
-		var giftObj = res.json(result);
-		console.log(giftObj);
-		res.render('gifts/index', giftObj);
+	.then(function(gifts){
+		var giftArr = {giftObject: gifts};
+		console.log(giftArr);
+		console.log(giftArr.giftObject[0].dataValues.gift_name);
+		res.render('gifts/index', giftArr);
 	});
 });
 
-router.post('/gifts/create', function (req, res) {
+router.post('/create', function (req, res) {
 	var gift = req.body; // set request to variable
 // create new instance of model gift
 	models.Gift.create(
 		{
-			giftName: gift.name,
-			giftIcon: gift.icon
+			gift_name: gift.name,
+			gift_icon: gift.icon
 		}
 	).then(function(){
 		res.redirect('/gifts')

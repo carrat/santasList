@@ -10,110 +10,150 @@ var models  = require('../models');
 var sequelizeConnection = models.sequelize
 
 var newChild;
+var newChildGift;
+var newChildList;
+var chi;
 
 
 // define routes
-router.get('/children', function (req, res) {
+router.get('/', function (req, res) {
 
-	models.Child.findAll({})
+	models.Child.findAll({ where: {list_id: 1} 
+		
+	})
 	.then(function(children){
-		var childObj = res.json(children);
-		console.log(childObj);
-		res.render('children/index', childObj);
+		var niceArr = {childObject: children};
+		console.log(niceArr);
+		console.log(niceArr.childObject[0].dataValues.child_name);
+		chi = {nice: niceArr};
+		console.log(chi);
+	})
+
+	.then(function(){
+		models.Child.findAll({ where: {list_id: 2} 
+		
+		})
+		.then(function(children){
+		var naughtyArr = {childObject: children};
+		console.log(naughtyArr);
+		chi.naughty = naughtyArr;
+		})
+		
+	})
+	.then(function(){
+		res.render('index', chi);
 	});
 });
 
-router.post('/children/create', function (req, res) {
-	var child = req.body; // set request to variable
+router.post('/create', function (req, res) {
+	var childName = req.body.name; // set request to variable
+	var giftVal = req.body.gift; // set request to variable
 // create new instance of model child
 	models.Child.create(
 		{
-			childName: child.name
-		}, 
-
-		{
-			// We need to 'include' the uniform and store models.
-			// Otherwise, Sequelize won't know which fields to enter into which tables.
-			include: [models.List],
-			include: [models.Gift]
+			child_name: childName,
+			list_id: 1,
+			gift_id: giftVal
 		}
 	)
-	// save child to variable
 	.then(function(child){
 		newChild = child;
-	});
-	
+	})
 	.then(function(){
-		newChild.setList(???);
-		newChild.setGift(???);
+		return models.Gift.findOne({ 
+			where: {id: giftVal} 
+		});
+	})
+	.then(function(gift){
+		newChildGift = gift;
+	})
+	.then(function(){
+		return models.List.findOne({ 
+			where: {id: 1} 
+		});
+	})
+	.then(function(list){
+		newChildList = list;
+	})
+	.then(function(){
+		newChildGift.setChild(newChild);
+		newChildList.setChild(newChild);
+	})
+	.then(function(){
+		res.redirect('/');
 	});
-
-	res.redirect('/');
 });
 
-router.post('/children/naughty/:id', function (req, res) {
+router.post('/naughty/:id', function (req, res) {
 
+	// Take the request...
+	var childID = req.params.id;
+	console.log("Naughty Child: " + childID)
+
+	models.Child.update({
+	  list_id: 2,
+	  gift_id: 1
+	}, {
+	  where: {
+	    id: {
+	      $eq: childID
+	    }
+	  }
+	})
+	.then(function(){
+		res.redirect('/')
+	});
+});
+
+router.post('/nice/:id', function (req, res) {
 	// Take the request...
 	var childID = req.params.id;
 
 	models.Child.update({
-	  naughty: 1,
+	  list_id: 1,
+	  gift_id: 2
 	}, {
 	  where: {
 	    id: {
-	      $e: childID
+	      $eq: childID
 	    }
 	  }
+	})
+	.then(function(){
+		res.redirect('/')
 	});
-
-	res.redirect('/');
 });
 
-router.post('/children/nice/:id', function (req, res) {
-	// Take the request...
-	var childID = req.params.id;
-
-	models.Child.update({
-	  naughty: 0,
-	}, {
-	  where: {
-	    id: {
-	      $e: childID
-	    }
-	  }
-	});
-
-	res.redirect('/');
-});
-
-router.delete('/children/delete/:id', function (req, res) {
+router.delete('/delete/:id', function (req, res) {
 	// Take the request...
 	var childID = req.params.id;
 
 	models.Child.delete({
-	  naughty: 0,
-	}, {
 	  where: {
 	    id: {
 	      $e: childID
 	    }
 	  }
+	})
+	.then(function(){
+		res.redirect('/')
 	});
-
-	res.redirect('/');
 });
 
-router.post('/children/assign/:child/:gift', function (req, res) {
+router.post('/assign/:child/:gift', function (req, res) {
 	var child = req.params.child; // set request to variable
 	var gift = req.params.gift; // set request to variable
 
 	models.Child.findOne({
 		where: {
-			child_id: child
+			id: child
 		}
-	}).then(function(result){
-		result.setGift(gift);
-	}).then(function(){
+	})
+	.then(function(result){
+		gift.setChild(result);
+
+	})
+	.then(function(){
 		res.redirect('/')
 	});
 });

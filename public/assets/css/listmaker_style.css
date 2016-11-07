@@ -61,9 +61,43 @@ i {
 	margin-top: 20px;
 	box-shadow: 15px 15px 7px rgba(0, 0, 0, 0.1);
 	padding: 20px;
-	padding-bottom: 5px;
+	padding-bottom: 0px;
 	padding-left: 5px;
 	border: 1px solid #bc0909;
+	margin-bottom:0px;
+}
+
+nav {
+	/*background-color: rgba(116,0,0,.4);*/
+	color: #FFFFFF;
+	margin-top: 0px;
+	/*box-shadow: 15px 15px 7px rgba(0, 0, 0, 0.1);*/
+	padding: 20px;
+	padding-top: 5px;
+	padding-bottom: 5px;
+	/*border: 1px solid #bc0909;*/
+	margin-bottom: 0px;
+	border-top: 0px none;
+	text-align: left;
+}
+
+nav a {
+	background-color: rgba(116,0,0,.4);
+	padding: 5px;
+	padding-left: 10px;
+	padding-right: 10px;
+	border: 1px solid #bc0909;
+	color: #e9b470;
+	font-size: 14px;
+	font-family: 'Bitter', serif;
+	border-top: 0px none;
+	margin-left: 0px;
+	margin-right: 0px;
+}
+nav a:hover {
+	color: #ffffff;
+	background-color: rgba(255,0,0,.5);
+
 }
 
 .container .jumbotron {
@@ -141,7 +175,7 @@ h2 {
 	padding-left: 0px;
 	text-align: center;
 	padding-top: 0px;
-	margin-top: 0px;
+	margin-top: 20px;
 
 
 }
@@ -274,6 +308,19 @@ input {
 	padding-bottom: 5px;
 }
 
+select {
+	color: #a40000;
+	padding-left: 10px;
+	padding-right: 10px;
+	margin-right: 10px;
+	box-shadow: 5px 5px 7px rgba(0, 0, 0, 0.1);
+	border: 1px solid #bc0909;
+	outline-style: none;
+	padding-top: 5px;
+	padding-bottom: 5px;
+	height: 35px;
+}
+
 form {
 	display: inline-block;
 }
@@ -289,15 +336,11 @@ form {
 	border: 0px none;
 }
 
-select {
-	color: #000000;
-	padding-top: 20px;
-	padding-bottom: 20px;
-	font-family: 'Libre Franklin', sans-serif;
-	font-size: 18px;
-	margin-bottom: 30px;
-	box-shadow: 9px 9px 7px rgba(0, 0, 0, 0.1);
+h3.giftTitle {
+	padding-right: 0px;
 }
+
+
 
 label {
 	padding-right: 10px;
@@ -335,6 +378,17 @@ input[type="button" i], input[type="submit" i], input[type="reset" i], input[typ
 	height: 32px;
 	padding-right: 10px;
 	padding-bottom: 10px;
+}
+
+.candyCaneLarge {
+	display: block;
+	height: 80px;
+	padding-right: 0px;
+	padding-bottom: 20px;
+	padding-top: 20px;
+	text-align: center;
+	margin-left: auto;
+	margin-right: auto;
 }
 .elf {
     display: inline-block;

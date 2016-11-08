@@ -7,7 +7,13 @@ module.exports = function(sequelize, DataTypes) {
   }, {
     underscored: true,
     freezeTableName: true,
-    tableName: 'children'
+    tableName: 'children',
+    classMethods: {
+      associate: function(models) {
+        Child.belongsTo(models.Gift);
+        Child.belongsTo(models.List);
+      }
+    }
   });
   return Child;
 };

@@ -8,7 +8,7 @@
       {{#each nice.niceChildObject}}
           <div class="row childRow">
             <div class="col-sm-8">
-              <img src="/static/img/candy-cane.png" class="candyCane"><h3>{{this.dataValues.child_name}}</h3>
+              <img src="/static/img/{{this.Gift.dataValues.gift_icon}}" class="candyCane"><h3>{{this.dataValues.child_name}}</h3>
             </div>
             <div class="col-sm-4 text-right">
               <form action="/children/naughty/{{this.dataValues.id}}" method="POST">

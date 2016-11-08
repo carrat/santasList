@@ -25,8 +25,7 @@ module.exports = function(sequelize, DataTypes) {
     tableName: 'gifts',
     classMethods: {
       associate: function(models) {
-        Gift.hasOne(models.Child);
-        Gift.belongsToMany(models.Child, {through: 'ChildGift'})
+        Gift.belongsToMany(models.Child, {through: 'GiftChild'})
       }
     }
   });

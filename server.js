@@ -10,11 +10,18 @@ var application_controller = require('./controllers/application_controller.js');
 var children_controller = require('./controllers/children_controller.js');
 var gifts_controller = require('./controllers/gifts_controller.js')
 
+var app = express();
 
 // we bring in the models we exported with index.js
 var models = require("./models");
+// Set which database connection to use
+var env = process.env.NODE_ENV || 'development';
+// create server instance
 
-var app = express();
+// we set the port of the app
+app.set('port', process.env.PORT || 3000);
+//import configuration file for database connections
+var config = require('./config/config.json')[app.get('env')];
 
 // target static files
 app.use('/static', express.static(__dirname + '/public/assets/'));
@@ -37,12 +44,6 @@ app.set('view engine', 'handlebars');
 app.use('/', application_controller);
 app.use('/children', children_controller);
 app.use('/gifts', gifts_controller);
-
-
-
-// we set the port of the app
-app.set('port', process.env.PORT || 3000);
-
 
 // we sync the models with our db 
 // (thus creating the apropos tables)

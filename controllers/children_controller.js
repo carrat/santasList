@@ -18,15 +18,15 @@ var chi;
 // define routes
 router.get('/', function (req, res) {
 
+	var chi =  {nice: "None", naughty: "None"};
+
 	models.Child.findAll({ where: {list_id: 1} 
 		
 	})
 	.then(function(children){
-		var niceArr = {childObject: children};
+		var niceArr = {niceChildObject: children};
 		console.log(niceArr);
-		console.log(niceArr.childObject[0].dataValues.child_name);
 		chi = {nice: niceArr};
-		console.log(chi);
 	})
 
 	.then(function(){
@@ -34,15 +34,16 @@ router.get('/', function (req, res) {
 		
 		})
 		.then(function(children){
-		var naughtyArr = {childObject: children};
-		console.log(naughtyArr);
-		chi.naughty = naughtyArr;
+			var naughtyArr = {naughtyChildObject: children};
+			console.log(naughtyArr);
+			chi.naughty = naughtyArr;
 		})
-		
+		.then(function(){	
+			console.log(chi);
+			res.render('index', chi);
+		})	
 	})
-	.then(function(){
-		res.render('index', chi);
-	});
+	
 });
 
 router.post('/create', function (req, res) {
@@ -65,7 +66,7 @@ router.post('/create', function (req, res) {
 		});
 	})
 	.then(function(gift){
-		newChildGift = gift;
+		newChild.setGift(gift);
 	})
 	.then(function(){
 		return models.List.findOne({ 
@@ -73,11 +74,7 @@ router.post('/create', function (req, res) {
 		});
 	})
 	.then(function(list){
-		newChildList = list;
-	})
-	.then(function(){
-		newChildGift.setChild(newChild);
-		newChildList.setChild(newChild);
+		newChild.setList(list);
 	})
 	.then(function(){
 		res.redirect('/');
@@ -91,8 +88,7 @@ router.post('/naughty/:id', function (req, res) {
 	console.log("Naughty Child: " + childID)
 
 	models.Child.update({
-	  list_id: 2,
-	  gift_id: 1
+	  list_id: 2
 	}, {
 	  where: {
 	    id: {
@@ -110,8 +106,7 @@ router.post('/nice/:id', function (req, res) {
 	var childID = req.params.id;
 
 	models.Child.update({
-	  list_id: 1,
-	  gift_id: 2
+	  list_id: 1
 	}, {
 	  where: {
 	    id: {
@@ -150,7 +145,7 @@ router.post('/assign/:child/:gift', function (req, res) {
 		}
 	})
 	.then(function(result){
-		gift.setChild(result);
+		Child.setGift(result);
 
 	})
 	.then(function(){

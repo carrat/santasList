@@ -1,0 +1,1 @@
+INSERT INTO `children` VALUES (1,'Brian Doyal',1,'2016-11-05 07:20:34'),(2,'Gabe Levasseur',0,'2016-11-05 06:27:55'),(5,'Andrew Carr',0,'2016-11-05 06:34:24'),(6,'John Stamatakos',0,'2016-11-05 07:21:19'),(7,'Josue Plaza',0,'2016-11-05 07:21:42');

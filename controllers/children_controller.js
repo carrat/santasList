@@ -126,7 +126,7 @@ router.delete('/delete/:id', function (req, res) {
 	models.Child.delete({
 	  where: {
 	    id: {
-	      $e: childID
+	      $eq: childID
 	    }
 	  }
 	})

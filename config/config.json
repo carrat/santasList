@@ -1,8 +1,8 @@
 {
   "development": {
     "username": "root",
-    "password": "Wah00sam",
-    "database": "santa_db",
+    "password": "password",
+    "database": "emoji_db",
     "host": "127.0.0.1",
     "dialect": "mysql"
   },
@@ -13,11 +13,11 @@
     "host": "127.0.0.1",
     "dialect": "mysql"
   },
-  "production": {
-    "username": "uay4p43q0el46omm",
-    "password": "fyj2kmxwl78k88pj",
-    "database": "es2s9e0fktey5qds",
-    "host": "ehc1u4pmphj917qf.cbetxkdyhwsb.us-east-1.rds.amazonaws.com",
+  "production": { //set JawsDB database info from Heroku here
+    "username": "",
+    "password": "",
+    "database": "",
+    "host": "",
     "dialect": "mysql"
   }
 }
